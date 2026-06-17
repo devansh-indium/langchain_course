@@ -1,0 +1,66 @@
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Environment variables
+.env
+.env.*
+
+# Python distribution files
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Logs
+*.log
+
+# IDEs
+.vscode/
+.idea/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Type checking
+.mypy_cache/
+.pyre/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Ruff
+.ruff_cache/
+
+# Black
+.black/
+
+# UV
+uv.lock
+
+# Django
+db.sqlite3
+db.sqlite3-journal
+media/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Misc
+*.swp
+*.swo
