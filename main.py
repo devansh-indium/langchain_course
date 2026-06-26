@@ -11,21 +11,51 @@
 
 
 from dotenv import load_dotenv
+from langchain.agents import create_agent
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import PromptTemplate
+from langchain_core.tools import tool
+from langchain_tavily import TavilySearch
+
+from langchain_core.messages import HumanMessage
+
+
+load_dotenv()
+
+tavily=TavilySearch()
+@tool
+def search(query:str)->str:
+    """this is a tool that searches the web for a query and returns the result
+    
+    Args:
+        query (str): the query to search for
+        Returns:
+            str: the search result
+    """
+    print("Searching for:", query)
+    return tavily.invoke(query)
+
+
+llm= ChatGoogleGenerativeAI(
+    model="gemini-2.5-flash",
+    temperature=0,
+)
+tools=[search]
+agent=create_agent(model=llm, tools=tools)
+
 load_dotenv()
 def main():
-    Information = '''my name is devansh'''
-    prompt_template='''here is the info about user{Information} answer the user query using this information '''
-    final_template=PromptTemplate(
-        input_variables=["Information"], template=prompt_template
-    )
-    llm= ChatGoogleGenerativeAI(
-        model="gemini-2.5-flash",
-        temperature=0,
-    )
-    chain=final_template|llm
-    response= chain.invoke(input={"Information":Information})
+    # Information = '''my name is devansh'''
+    # prompt_template='''here is the info about user{Information} answer the user query using this information '''
+    # final_template=PromptTemplate(
+    #     input_variables=["Information"], template=prompt_template
+    # )
+    # llm= ChatGoogleGenerativeAI(
+    #     model="gemini-2.5-flash",
+    #     temperature=0,
+    # )
+    # chain=final_template|llm
+    response= agent.invoke({"messages": [HumanMessage(content = "what is the weather today in New York?")]})
     print(response)
 
 if __name__ == "__main__":
